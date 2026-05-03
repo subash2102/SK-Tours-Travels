@@ -59,7 +59,7 @@ ROOT_URLCONF = "sktt.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [os.path.join(os.getcwd(), "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
