@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Enquiry received | SK Tours & Travels{% endblock %}
+
+{% block content %}
+  <section class="section reveal">
+    <div class="card pad center">
+      <div class="success-icon">✓</div>
+      <h1 class="mt-12">Enquiry received</h1>
+      <p class="muted mt-8">
+        Thanks for booking with SK Tours & Travels. We’ll contact you shortly to confirm.
+      </p>
+      <div class="mt-16">
+        <a class="btn" href="{% url 'cars_list' %}">Browse cars</a>
+        <a class="btn btn-ghost" href="{% url 'home' %}">Go home</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

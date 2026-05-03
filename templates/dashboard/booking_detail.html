@@ -1,0 +1,76 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Booking #{{ booking.pk }} | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="dash-head">
+    <div>
+      <h1>Enquiry #{{ booking.pk }}</h1>
+      <div class="muted">Created {{ booking.created_at|date:"d M Y, H:i" }}</div>
+    </div>
+    <a class="btn btn-sm btn-ghost" href="{% url 'dashboard_bookings' %}">Back</a>
+  </div>
+
+  <div class="two-col mt-16">
+    <div class="card pad">
+      <h2>Customer</h2>
+      <div class="kv mt-12">
+        <div class="kv-row"><div class="muted">Name</div><div>{{ booking.full_name }}</div></div>
+        <div class="kv-row"><div class="muted">Phone</div><div>{{ booking.phone }}</div></div>
+        <div class="kv-row"><div class="muted">Email</div><div>{{ booking.email|default:"—" }}</div></div>
+      </div>
+      <h2 class="mt-20">Trip</h2>
+      <div class="kv mt-12">
+        <div class="kv-row"><div class="muted">Type</div><div>{{ booking.get_trip_type_display }}</div></div>
+        <div class="kv-row"><div class="muted">Pickup</div><div>{{ booking.pickup_location }}</div></div>
+        <div class="kv-row"><div class="muted">Drop</div><div>{{ booking.drop_location }}</div></div>
+        <div class="kv-row"><div class="muted">Date/time</div><div>{{ booking.pickup_datetime|date:"d M Y, H:i" }}</div></div>
+        <div class="kv-row"><div class="muted">Passengers</div><div>{{ booking.passengers }}</div></div>
+      </div>
+      {% if booking.notes %}
+        <h2 class="mt-20">Notes</h2>
+        <div class="muted mt-12">{{ booking.notes }}</div>
+      {% endif %}
+    </div>
+
+    <div class="card pad">
+      <h2>Status</h2>
+      <form method="post" class="mt-12">
+        {% csrf_token %}
+        <div class="field">
+          <label>Update status</label>
+          {{ form.status }}
+          {% if form.status.errors %}<div class="err">{{ form.status.errors|striptags }}</div>{% endif %}
+        </div>
+        <div class="form-actions mt-16">
+          <button class="btn" type="submit" data-loading-btn>Save</button>
+        </div>
+      </form>
+
+      <h2 class="mt-20">Preferences</h2>
+      <div class="kv mt-12">
+        <div class="kv-row">
+          <div class="muted">Car</div>
+          <div>
+            {% if booking.preferred_car %}
+              <a class="link" href="{% url 'car_detail' booking.preferred_car.pk %}">{{ booking.preferred_car.name }}</a>
+            {% else %}
+              —
+            {% endif %}
+          </div>
+        </div>
+        <div class="kv-row">
+          <div class="muted">Driver</div>
+          <div>
+            {% if booking.preferred_driver %}
+              <a class="link" href="{% url 'driver_detail' booking.preferred_driver.pk %}">{{ booking.preferred_driver.full_name }}</a>
+            {% else %}
+              —
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

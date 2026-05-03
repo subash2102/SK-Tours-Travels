@@ -1,0 +1,313 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cars | SK Tours & Travels{% endblock %}
+
+{% block head %}
+  <style>
+    .cars-shell {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .cars-hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 24px;
+      padding: 2rem;
+      background: radial-gradient(circle at 10% 20%, rgba(255, 206, 84, 0.28), transparent 40%),
+                  radial-gradient(circle at 90% 10%, rgba(109, 214, 255, 0.2), transparent 35%),
+                  linear-gradient(130deg, rgba(17, 20, 32, 0.98), rgba(26, 32, 52, 0.98));
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    }
+
+    .cars-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -110px auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.14), transparent 68%);
+      pointer-events: none;
+    }
+
+    .cars-hero h1 {
+      margin: 0 0 0.55rem;
+      font-size: clamp(1.6rem, 1.25rem + 1.2vw, 2.5rem);
+      letter-spacing: 0.3px;
+    }
+
+    .cars-hero p {
+      margin: 0;
+      max-width: 680px;
+      color: rgba(232, 237, 255, 0.82);
+      line-height: 1.6;
+    }
+
+    .cars-hero-tags {
+      margin-top: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .cars-hero-tags span {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
+      color: #e9efff;
+      padding: 0.38rem 0.78rem;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+
+    .cars-filter-wrap {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      background: linear-gradient(170deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(8px);
+      padding: 1rem;
+    }
+
+    .cars-filter-bar {
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr 0.75fr auto auto;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .cars-filter-bar input,
+    .cars-filter-bar select {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(8, 10, 20, 0.55);
+      color: #eef1ff;
+      padding: 0.72rem 0.8rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cars-filter-bar input:focus,
+    .cars-filter-bar select:focus {
+      border-color: rgba(255, 219, 120, 0.9);
+      box-shadow: 0 0 0 3px rgba(255, 210, 90, 0.18);
+    }
+
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .car-tile {
+      display: grid;
+      gap: 0.88rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+      padding: 0.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .car-tile:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 214, 116, 0.45);
+      box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
+    }
+
+    .car-tile-media {
+      overflow: hidden;
+      border-radius: 14px;
+      aspect-ratio: 16/10;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .car-tile-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.28s ease;
+    }
+
+    .car-tile:hover .car-tile-media img {
+      transform: scale(1.06);
+    }
+
+    .car-tile-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .car-name {
+      font-size: 1.03rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .car-status {
+      border-radius: 999px;
+      padding: 0.24rem 0.62rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .car-status-ok {
+      background: rgba(35, 201, 125, 0.18);
+      color: #7dffc3;
+      border: 1px solid rgba(55, 255, 161, 0.24);
+    }
+
+    .car-status-no {
+      background: rgba(255, 86, 86, 0.18);
+      color: #ffb5b5;
+      border: 1px solid rgba(255, 123, 123, 0.26);
+    }
+
+    .car-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .car-specs span {
+      font-size: 0.74rem;
+      padding: 0.2rem 0.52rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(236, 241, 255, 0.9);
+    }
+
+    .car-foot {
+      margin-top: 0.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .car-price {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.16rem;
+      font-weight: 700;
+      color: #ffe39a;
+    }
+
+    .car-price small {
+      font-weight: 500;
+      color: rgba(232, 237, 255, 0.72);
+    }
+
+    .car-link-hint {
+      font-size: 0.84rem;
+      color: rgba(199, 222, 255, 0.84);
+    }
+
+    .cars-empty {
+      border: 1px dashed rgba(255, 255, 255, 0.22);
+      border-radius: 16px;
+      padding: 2.3rem 1rem;
+      text-align: center;
+      color: rgba(233, 239, 255, 0.88);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    @media (max-width: 900px) {
+      .cars-filter-bar {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .cars-hero {
+        padding: 1.4rem;
+        border-radius: 18px;
+      }
+
+      .cars-filter-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="cars-shell">
+    <section class="cars-hero reveal">
+      <h1>Find Your Perfect Ride</h1>
+      <p>From city drives to long outstation journeys, choose a car that matches your comfort, budget, and travel style in minutes.</p>
+      <div class="cars-hero-tags">
+        <span>Verified fleet</span>
+        <span>Transparent pricing</span>
+        <span>Fast confirmation</span>
+      </div>
+    </section>
+
+    <section class="cars-filter-wrap reveal">
+      <form method="get" class="cars-filter-bar">
+        <input name="q" value="{{ q }}" placeholder="Search by name or brand..." />
+        <select name="category">
+          <option value="">All categories</option>
+          {% for value,label in categories %}
+            <option value="{{ value }}" {% if category == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        <input name="seats" value="{{ seats }}" placeholder="Seats (e.g. 4)" />
+        <button class="btn btn-sm" type="submit">Apply</button>
+        <a class="btn btn-sm btn-ghost" href="{% url 'cars_list' %}">Clear</a>
+      </form>
+    </section>
+
+    <section class="section reveal">
+      <div class="cars-grid">
+        {% for car in cars %}
+          <a class="car-tile" href="{% url 'car_detail' car.pk %}">
+            <div class="car-tile-media">
+              {% if car.main_image %}
+                <img src="{{ car.main_image.url }}" alt="{{ car.name }}" loading="lazy" />
+              {% else %}
+                <img src="{% static 'img/car-placeholder.svg' %}" alt="Car placeholder" loading="lazy" />
+              {% endif %}
+            </div>
+
+            <div class="car-tile-head">
+              <div class="car-name">{{ car.name }}</div>
+              <div class="car-status {% if car.is_available %}car-status-ok{% else %}car-status-no{% endif %}">
+                {% if car.is_available %}Available{% else %}Busy{% endif %}
+              </div>
+            </div>
+
+            <div class="car-specs">
+              <span>{{ car.get_category_display }}</span>
+              <span>{{ car.seats }} seats</span>
+              <span>{{ car.get_fuel_type_display }}</span>
+            </div>
+
+            <div class="car-foot">
+              {% if car.price_per_km %}
+                <div class="car-price">₹{{ car.price_per_km }} <small>/km</small></div>
+              {% elif car.price_per_day %}
+                <div class="car-price">₹{{ car.price_per_day }} <small>/day</small></div>
+              {% else %}
+                <div class="muted">Call for price</div>
+              {% endif %}
+              <div class="car-link-hint">View details →</div>
+            </div>
+          </a>
+        {% empty %}
+          <div class="cars-empty">No cars found for this filter. Try changing category or seats.</div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+{% endblock %}
+

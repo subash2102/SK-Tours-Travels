@@ -1,0 +1,51 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Bookings (Admin) | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="dash-head">
+    <div>
+      <h1>Bookings / Enquiries</h1>
+      <div class="muted">Track and update enquiry status.</div>
+    </div>
+  </div>
+
+  <form method="get" class="filter-bar mt-16">
+    <input name="q" value="{{ q }}" placeholder="Search name / phone / route..." />
+    <select name="status">
+      <option value="">All statuses</option>
+      {% for value,label in statuses %}
+        <option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn btn-sm" type="submit">Filter</button>
+    <a class="btn btn-sm btn-ghost" href="{% url 'dashboard_bookings' %}">Reset</a>
+  </form>
+
+  <div class="table mt-16">
+    <div class="t-head">
+      <div>Customer</div>
+      <div>Route</div>
+      <div>Pickup</div>
+      <div>Status</div>
+      <div></div>
+    </div>
+    {% for b in bookings %}
+      <div class="t-row">
+        <div>
+          <div class="t-strong">{{ b.full_name }}</div>
+          <div class="muted small">{{ b.phone }}{% if b.email %} • {{ b.email }}{% endif %}</div>
+        </div>
+        <div class="muted">{{ b.pickup_location }} → {{ b.drop_location }}</div>
+        <div>{{ b.pickup_datetime|date:"d M Y, H:i" }}</div>
+        <div><span class="badge badge-soft">{{ b.get_status_display }}</span></div>
+        <div class="t-actions">
+          <a class="btn btn-xs" href="{% url 'dashboard_booking_detail' b.pk %}">Open</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="muted mt-12">No enquiries yet.</div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ car.name }} | SK Tours & Travels{% endblock %}
+
+{% block content %}
+  <section class="detail-head reveal">
+    <div>
+      <div class="pill">{{ car.get_category_display }}</div>
+      <h1 class="mt-8">{{ car.name }}</h1>
+      <div class="muted mt-6">{{ car.brand|default:"" }} • {{ car.seats }} seats • {{ car.get_transmission_display }} • {{ car.get_fuel_type_display }}</div>
+    </div>
+    <div class="detail-actions">
+      <a class="btn" href="{% url 'book' %}?car={{ car.pk }}">Book this car</a>
+      <a class="btn btn-ghost" href="{% url 'cars_list' %}">Back to cars</a>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="two-col">
+      <div class="detail-media">
+        {% if car.main_image %}
+          <img src="{{ car.main_image.url }}" alt="{{ car.name }}" />
+        {% else %}
+          <img src="{% static 'img/car-placeholder.svg' %}" alt="Car placeholder" />
+        {% endif %}
+      </div>
+      <div class="card pad">
+        <h2>Pricing</h2>
+        <div class="price-grid mt-12">
+          <div class="price-item">
+            <div class="muted">Per km</div>
+            <div class="price-val">{% if car.price_per_km %}₹{{ car.price_per_km }}{% else %}—{% endif %}</div>
+          </div>
+          <div class="price-item">
+            <div class="muted">Per day</div>
+            <div class="price-val">{% if car.price_per_day %}₹{{ car.price_per_day }}{% else %}—{% endif %}</div>
+          </div>
+          <div class="price-item">
+            <div class="muted">Availability</div>
+            <div class="price-val">{% if car.is_available %}Available{% else %}Busy{% endif %}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2>About this car</h2>
+        <p class="muted mt-12">{{ car.description|default:"No description yet." }}</p>
+        <div class="mt-16">
+          <a class="btn btn-sm" href="{% url 'book' %}?car={{ car.pk }}">Enquire now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

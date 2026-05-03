@@ -1,0 +1,48 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Drivers (Admin) | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="dash-head">
+    <div>
+      <h1>Drivers</h1>
+      <div class="muted">Create, update, or remove driver details.</div>
+    </div>
+    <a class="btn btn-sm" href="{% url 'dashboard_driver_create' %}">+ New driver</a>
+  </div>
+
+  <form method="get" class="filter-bar mt-16">
+    <input name="q" value="{{ q }}" placeholder="Search by name / city / languages..." />
+    <button class="btn btn-sm" type="submit">Search</button>
+    <a class="btn btn-sm btn-ghost" href="{% url 'dashboard_drivers' %}">Reset</a>
+  </form>
+
+  <div class="table mt-16">
+    <div class="t-head">
+      <div>Name</div>
+      <div>City</div>
+      <div>Experience</div>
+      <div>Assigned car</div>
+      <div></div>
+    </div>
+    {% for d in drivers %}
+      <div class="t-row">
+        <div>
+          <div class="t-strong">{{ d.full_name }}</div>
+          <div class="muted small">{{ d.languages|default:"—" }}</div>
+        </div>
+        <div>{{ d.city|default:"—" }}</div>
+        <div>{{ d.experience_years }} yrs</div>
+        <div>{{ d.assigned_car.name|default:"—" }}</div>
+        <div class="t-actions">
+          <a class="btn btn-xs btn-ghost" href="{% url 'driver_detail' d.pk %}">View</a>
+          <a class="btn btn-xs" href="{% url 'dashboard_driver_edit' d.pk %}">Edit</a>
+          <a class="btn btn-xs btn-danger" href="{% url 'dashboard_driver_delete' d.pk %}">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="muted mt-12">No drivers yet.</div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

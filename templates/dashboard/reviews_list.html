@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Reviews (Admin) | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="dash-head">
+    <div>
+      <h1>Customer reviews</h1>
+      <div class="muted">Approve feedback before it appears on the homepage.</div>
+    </div>
+  </div>
+
+  <form method="get" class="filter-bar mt-16">
+    <select name="status">
+      <option value="pending" {% if status == "pending" %}selected{% endif %}>Pending</option>
+      <option value="approved" {% if status == "approved" %}selected{% endif %}>Approved</option>
+      <option value="all" {% if status == "all" %}selected{% endif %}>All</option>
+    </select>
+    <button class="btn btn-sm" type="submit">Filter</button>
+  </form>
+
+  <div class="table mt-16">
+    <div class="t-head" style="grid-template-columns: 1.2fr .6fr 2fr 1fr;">
+      <div>Customer</div>
+      <div>Rating</div>
+      <div>Message</div>
+      <div></div>
+    </div>
+    {% for r in reviews %}
+      <div class="t-row" style="grid-template-columns: 1.2fr .6fr 2fr 1fr;">
+        <div>
+          <div class="t-strong">{{ r.customer_name }}</div>
+          <div class="muted small">{{ r.created_at|date:"d M Y, H:i" }}</div>
+        </div>
+        <div class="t-strong">{{ r.rating }}/5</div>
+        <div class="muted">{{ r.message }}</div>
+        <div class="t-actions">
+          <form method="post" action="{% url 'dashboard_review_toggle' r.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-xs {% if r.is_approved %}btn-ghost{% else %}{% endif %}" type="submit">
+              {% if r.is_approved %}Unapprove{% else %}Approve{% endif %}
+            </button>
+          </form>
+          <a class="btn btn-xs btn-danger" href="{% url 'dashboard_review_delete' r.pk %}">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="muted mt-12">No reviews found.</div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

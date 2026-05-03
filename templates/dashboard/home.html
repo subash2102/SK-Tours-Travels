@@ -1,0 +1,44 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Dashboard | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="dash-head">
+    <div>
+      <h1>Overview</h1>
+      <div class="muted">Quick stats for your fleet and enquiries.</div>
+    </div>
+  </div>
+
+  <div class="grid grid-4 mt-16">
+    <div class="card pad">
+      <div class="muted">Cars</div>
+      <div class="stat-num mt-6">{{ cars_count }}</div>
+    </div>
+    <div class="card pad">
+      <div class="muted">Drivers</div>
+      <div class="stat-num mt-6">{{ drivers_count }}</div>
+    </div>
+    <div class="card pad">
+      <div class="muted">Bookings</div>
+      <div class="stat-num mt-6">{{ bookings_count }}</div>
+    </div>
+    <div class="card pad">
+      <div class="muted">New</div>
+      <div class="stat-num mt-6">{{ new_bookings_count }}</div>
+    </div>
+  </div>
+
+  <div class="mt-20">
+    <div class="card pad">
+      <h2>Next actions</h2>
+      <div class="muted mt-8">Add inventory, keep availability updated, and contact new enquiries quickly.</div>
+      <div class="mt-16">
+        <a class="btn btn-sm" href="{% url 'dashboard_car_create' %}">Add a car</a>
+        <a class="btn btn-sm btn-ghost" href="{% url 'dashboard_driver_create' %}">Add a driver</a>
+        <a class="btn btn-sm btn-ghost" href="{% url 'dashboard_bookings' %}">View enquiries</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

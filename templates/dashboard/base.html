@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="dash reveal">
+    <aside class="dash-nav">
+      <div class="dash-title">Admin Dashboard</div>
+      <a class="dash-link" href="{% url 'dashboard_home' %}">Overview</a>
+      <a class="dash-link" href="{% url 'dashboard_cars' %}">Cars</a>
+      <a class="dash-link" href="{% url 'dashboard_drivers' %}">Drivers</a>
+      <a class="dash-link" href="{% url 'dashboard_bookings' %}">Bookings</a>
+      <a class="dash-link" href="{% url 'dashboard_reviews' %}">Reviews</a>
+      <div class="dash-sep"></div>
+      <a class="dash-link" href="{% url 'home' %}">Public site</a>
+      <a class="dash-link" href="/django-admin/">Django admin</a>
+    </aside>
+
+    <div class="dash-main">
+      {% block dash_content %}{% endblock %}
+    </div>
+  </section>
+{% endblock %}
+

@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}SK Tours & Travels | Cab Bookings{% endblock %}
+
+{% block content %}
+  <section class="hero hero-banner">
+    <div class="hero-video" aria-hidden="true">
+      <video autoplay muted loop playsinline preload="metadata">
+        <source src="{% static 'video/banner_video.mp4' %}" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-left reveal">
+      <!-- <div class="pill">Cab bookings • Airport • Outstation</div> -->
+      <h1 class="hero-title">
+        Premium rides with
+        <span class="grad grad-gold">clean pricing</span>
+        and
+        <span class="grad grad-gold">great service</span>.
+      </h1>
+      <p class="lead">
+        Book a cab in minutes. Choose from a wide range of cars and verified drivers.
+      </p>
+      <div class="hero-actions hero-cta-strip">
+        <a class="btn-hero btn-hero-primary" href="{% url 'book' %}">
+          <span class="btn-hero-shine" aria-hidden="true"></span>
+          <span class="btn-hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 2v4" /><path d="M16 2v4" />
+              <rect x="3" y="6" width="18" height="14" rx="2" />
+              <path d="M3 12h18" /><path d="M8 16h.01" /><path d="M16 16h.01" />
+            </svg>
+          </span>
+          <span class="btn-hero-copy">
+            <span class="btn-hero-title">Book a Cab</span>
+            <span class="btn-hero-sub">Start your trip</span>
+          </span>
+          <span class="btn-hero-go" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
+          </span>
+        </a>
+        <a class="btn-hero btn-hero-glass" href="{% url 'cars_list' %}">
+          <span class="btn-hero-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 17h2a1 1 0 0 0 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8" />
+              <path d="M3 18v-5h12v5" /><path d="M5 18v2" /><path d="M19 18v2" />
+              <circle cx="7.5" cy="17.5" r="2.5" /><circle cx="16.5" cy="17.5" r="2.5" />
+            </svg>
+          </span>
+          <span class="btn-hero-copy">
+            <span class="btn-hero-title">Browse Cars</span>
+            <span class="btn-hero-sub">See the fleet</span>
+          </span>
+        </a>
+      </div>
+      <div class="hero-stats" role="list">
+        <div class="stat-tile" role="listitem">
+          <span class="stat-tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+          </span>
+          <div class="stat-tile-body">
+            <span class="stat-tile-value">24×7</span>
+            <span class="stat-tile-label">Always-on support</span>
+          </div>
+        </div>
+        <div class="stat-tile" role="listitem">
+          <span class="stat-tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 4 9v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9l-8-6Z" />
+              <path d="M9 21v-6h6v6" />
+            </svg>
+          </span>
+          <div class="stat-tile-body">
+            <span class="stat-tile-value">Clean</span>
+            <span class="stat-tile-label">Well-kept vehicles</span>
+          </div>
+        </div>
+        <div class="stat-tile" role="listitem">
+          <span class="stat-tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </span>
+          <div class="stat-tile-body">
+            <span class="stat-tile-value">Verified</span>
+            <span class="stat-tile-label">Trusted drivers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="hero-right reveal">
+      <div class="glass-card">
+        <div class="glass-title">Quick Enquiry</div>
+        <div class="muted">Tell us your route and pickup time.</div>
+        <a class="btn btn-sm mt-12" href="{% url 'book' %}">Open Booking Form</a>
+        <div class="glass-grid mt-16">
+          <div class="chip">Airport drop</div>
+          <div class="chip">One-way</div>
+          <div class="chip">Round trip</div>
+          <div class="chip">Outstation</div>
+        </div>
+      </div>
+    </div> -->
+    <a class="hero-scroll" href="#discover" aria-label="Scroll down to content">
+      <span class="hero-scroll-label">Scroll</span>
+      <span class="hero-scroll-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="28" height="28" focusable="false">
+          <path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+    </a>
+  </section>
+
+  <section id="discover" class="section reveal" tabindex="-1">
+    <div class="home-shell home-shell--why">
+      <header class="home-shell-head">
+        <div>
+          <p class="home-shell-label">Your benefits</p>
+          <h2 class="home-shell-title">Why SK Tours &amp; Travels</h2>
+        </div>
+        <a class="home-cta-link home-cta-link--ghost" href="{% url 'book' %}">Get a quote →</a>
+      </header>
+      <div class="home-shell-body">
+        <div class="home-feature-grid">
+      <article class="home-feature">
+        <div class="home-feature-glow" aria-hidden="true"></div>
+        <div class="home-feature-icon home-feature-icon--gold" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" /></svg>
+        </div>
+        <p class="home-feature-kicker">Transparent pricing</p>
+        <h3 class="home-feature-heading">No confusion at the end</h3>
+        <p class="home-feature-text">Clear pricing per km or day with straightforward trip confirmation.</p>
+      </article>
+      <article class="home-feature">
+        <div class="home-feature-glow" aria-hidden="true"></div>
+        <div class="home-feature-icon home-feature-icon--cyan" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /><path d="m9 12 2 2 4-4" /></svg>
+        </div>
+        <p class="home-feature-kicker">Verified drivers</p>
+        <h3 class="home-feature-heading">Safe and professional</h3>
+        <p class="home-feature-text">Experienced drivers with polite service and solid route knowledge.</p>
+      </article>
+      <article class="home-feature">
+        <div class="home-feature-glow" aria-hidden="true"></div>
+        <div class="home-feature-icon home-feature-icon--violet" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+        </div>
+        <p class="home-feature-kicker">On-time pickup</p>
+        <h3 class="home-feature-heading">Punctual rides</h3>
+        <p class="home-feature-text">Airport, local, or outstation—we aim to be there when you need us.</p>
+      </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="home-shell home-shell--how">
+      <header class="home-shell-head">
+        <div>
+          <p class="home-shell-label">Simple process</p>
+          <h2 class="home-shell-title">How it works</h2>
+        </div>
+        <a class="home-cta-link home-cta-link--ghost" href="{% url 'cars_list' %}">See fleet →</a>
+      </header>
+      <div class="home-shell-body">
+        <ol class="home-flow">
+      <li class="home-flow-step">
+        <span class="home-flow-num">01</span>
+        <div class="home-flow-body">
+          <h3 class="home-flow-title">Choose a car</h3>
+          <p class="home-flow-desc">Browse the fleet and pick a ride that fits your trip.</p>
+        </div>
+      </li>
+      <li class="home-flow-step">
+        <span class="home-flow-num">02</span>
+        <div class="home-flow-body">
+          <h3 class="home-flow-title">Send enquiry</h3>
+          <p class="home-flow-desc">Share pickup, drop, and date/time—we’ll review the details.</p>
+        </div>
+      </li>
+      <li class="home-flow-step">
+        <span class="home-flow-num">03</span>
+        <div class="home-flow-body">
+          <h3 class="home-flow-title">We confirm fast</h3>
+          <p class="home-flow-desc">Call or WhatsApp to lock price, vehicle, and availability.</p>
+        </div>
+      </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="home-shell home-shell--fleet">
+      <header class="home-shell-head">
+        <div>
+          <p class="home-shell-label">Fleet highlights</p>
+          <h2 class="home-shell-title">Featured cars</h2>
+        </div>
+        <a class="home-cta-link home-cta-link--ghost" href="{% url 'cars_list' %}">View all cars</a>
+      </header>
+      <div class="home-shell-body">
+        <div class="grid grid-3 home-shell-grid">
+          {% for car in featured_cars %}
+            <a class="card home-tile home-tile--car" href="{% url 'car_detail' car.pk %}">
+              <div class="home-tile-media">
+                {% if car.main_image %}
+                  <img src="{{ car.main_image.url }}" alt="{{ car.name }}" loading="lazy" />
+                {% else %}
+                  <img src="{% static 'img/car-placeholder.svg' %}" alt="Car placeholder" loading="lazy" />
+                {% endif %}
+                <span class="home-tile-shade" aria-hidden="true"></span>
+              </div>
+              <div class="home-tile-body">
+                <div class="card-top">
+                  <div class="card-title">{{ car.name }}</div>
+                  <div class="badge {% if car.is_available %}badge-ok{% else %}badge-no{% endif %}">
+                    {% if car.is_available %}Available{% else %}Busy{% endif %}
+                  </div>
+                </div>
+                <div class="muted home-tile-meta">{{ car.get_category_display }} • {{ car.seats }} seats • {{ car.get_transmission_display }}</div>
+                <div class="card-meta home-tile-foot">
+                  {% if car.price_per_km %}
+                    <div><span class="meta-k">₹{{ car.price_per_km }}</span><span class="muted">/km</span></div>
+                  {% elif car.price_per_day %}
+                    <div><span class="meta-k">₹{{ car.price_per_day }}</span><span class="muted">/day</span></div>
+                  {% else %}
+                    <div class="muted">Call for price</div>
+                  {% endif %}
+                  <div class="home-tile-arrow" aria-hidden="true">→</div>
+                </div>
+              </div>
+            </a>
+          {% empty %}
+            <p class="home-shell-empty muted">No cars yet. Seed demo data to see content.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="home-shell home-shell--drivers">
+      <header class="home-shell-head">
+        <div>
+          <p class="home-shell-label">Behind the wheel</p>
+          <h2 class="home-shell-title">Featured drivers</h2>
+        </div>
+        <a class="home-cta-link home-cta-link--ghost" href="{% url 'drivers_list' %}">View all drivers</a>
+      </header>
+      <div class="home-shell-body">
+        <div class="grid grid-3 home-shell-grid">
+          {% for d in featured_drivers %}
+            <a class="card home-tile home-tile--driver" href="{% url 'driver_detail' d.pk %}">
+              <div class="home-tile-media home-tile-media--round">
+                {% if d.photo %}
+                  <img src="{{ d.photo.url }}" alt="{{ d.full_name }}" loading="lazy" />
+                {% else %}
+                  <img src="{% static 'img/driver-placeholder.svg' %}" alt="Driver placeholder" loading="lazy" />
+                {% endif %}
+                <span class="home-tile-shade" aria-hidden="true"></span>
+              </div>
+              <div class="home-tile-body">
+                <div class="card-top">
+                  <div class="card-title">{{ d.full_name }}</div>
+                  <div class="badge {% if d.is_available %}badge-ok{% else %}badge-no{% endif %}">
+                    {% if d.is_available %}Available{% else %}Busy{% endif %}
+                  </div>
+                </div>
+                <div class="muted home-tile-meta">{{ d.experience_years }} yrs exp • {{ d.city|default:"—" }}</div>
+                <div class="card-meta home-tile-foot">
+                  <div class="muted home-tile-lang">{{ d.languages|default:"Languages: —" }}</div>
+                  <div class="home-tile-arrow" aria-hidden="true">→</div>
+                </div>
+              </div>
+            </a>
+          {% empty %}
+            <p class="home-shell-empty muted">No drivers yet. Seed demo data to see content.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="home-shell home-shell--reviews">
+      <header class="home-shell-head">
+        <div>
+          <p class="home-shell-label">Social proof</p>
+          <h2 class="home-shell-title">Customer reviews</h2>
+        </div>
+        <a class="home-cta-link home-cta-link--ghost" href="{% url 'book' %}">Book now</a>
+      </header>
+      <div class="home-shell-body">
+        <div class="grid grid-3 home-shell-grid home-reviews-grid">
+          {% for r in reviews %}
+            <article class="home-review-card">
+              <div class="home-review-top">
+                <div class="home-review-avatar">{{ r.customer_name|first|upper }}</div>
+                <div class="home-review-who">
+                  <div class="home-review-name">{{ r.customer_name }}</div>
+                  <time class="home-review-date" datetime="{{ r.created_at|date:'c' }}">{{ r.created_at|date:"d M Y" }}</time>
+                </div>
+                <div class="home-review-stars" aria-label="{{ r.rating }} out of 5 stars">
+                  {% if r.rating == 5 %}★★★★★{% elif r.rating == 4 %}★★★★☆{% elif r.rating == 3 %}★★★☆☆{% elif r.rating == 2 %}★★☆☆☆{% else %}★☆☆☆☆{% endif %}
+                </div>
+              </div>
+              <p class="home-review-text">{{ r.message }}</p>
+            </article>
+          {% empty %}
+            <p class="home-shell-empty muted">No reviews yet—be the first to share feedback.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="home-shell home-shell--feedback">
+      <header class="home-shell-head home-shell-head--stack">
+        <div>
+          <p class="home-shell-label">Your voice</p>
+          <h2 class="home-shell-title">Leave feedback</h2>
+          <p class="home-shell-lead muted">Your note appears on the site after a quick admin check.</p>
+        </div>
+      </header>
+      <div class="home-shell-body home-shell-body--form">
+        <form method="post" action="{% url 'submit_review' %}" class="home-feedback-form" novalidate>
+          {% csrf_token %}
+          <div class="form-grid">
+            <div class="field">
+              <label>Your name</label>
+              {{ review_form.customer_name }}
+              {% if review_form.customer_name.errors %}<div class="err">{{ review_form.customer_name.errors|striptags }}</div>{% endif %}
+            </div>
+            <div class="field">
+              <label>Rating</label>
+              {{ review_form.rating }}
+              {% if review_form.rating.errors %}<div class="err">{{ review_form.rating.errors|striptags }}</div>{% endif %}
+            </div>
+            <div class="field field-wide">
+              <label>Feedback</label>
+              {{ review_form.message }}
+              {% if review_form.message.errors %}<div class="err">{{ review_form.message.errors|striptags }}</div>{% endif %}
+            </div>
+          </div>
+          <div class="form-actions mt-16">
+            <button class="btn" type="submit" data-loading-btn>Submit feedback</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Book a Cab | SK Tours & Travels{% endblock %}
+
+{% block content %}
+  <section class="page-head reveal">
+    <h1>Book a Cab</h1>
+    <p class="muted">Fill the enquiry form. We’ll confirm via call/WhatsApp.</p>
+  </section>
+
+  <section class="section reveal">
+    <div class="card pad form-card">
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-grid">
+          <div class="field">
+            <label>Full name</label>
+            {{ form.full_name }}
+            {% if form.full_name.errors %}<div class="err">{{ form.full_name.errors|striptags }}</div>{% endif %}
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            {{ form.phone }}
+            {% if form.phone.errors %}<div class="err">{{ form.phone.errors|striptags }}</div>{% endif %}
+          </div>
+          <div class="field">
+            <label>Email </label>
+            {{ form.email }}
+            {% if form.email.errors %}<div class="err">{{ form.email.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <label>Pickup location</label>
+            {{ form.pickup_location }}
+            {% if form.pickup_location.errors %}<div class="err">{{ form.pickup_location.errors|striptags }}</div>{% endif %}
+          </div>
+          <div class="field">
+            <label>Drop location</label>
+            {{ form.drop_location }}
+            {% if form.drop_location.errors %}<div class="err">{{ form.drop_location.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <label>Pickup date & time</label>
+            {{ form.pickup_datetime }}
+            {% if form.pickup_datetime.errors %}<div class="err">{{ form.pickup_datetime.errors|striptags }}</div>{% endif %}
+          </div>
+          <div class="field">
+            <label>Trip type</label>
+            {{ form.trip_type }}
+          </div>
+          <div class="field">
+            <label>Passengers</label>
+            {{ form.passengers }}
+            {% if form.passengers.errors %}<div class="err">{{ form.passengers.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <label>Preferred car (optional)</label>
+            {{ form.preferred_car }}
+          </div>
+          <div class="field">
+            <label>Preferred driver (optional)</label>
+            {{ form.preferred_driver }}
+          </div>
+
+          <div class="field field-wide">
+            <label>Notes (optional)</label>
+            {{ form.notes }}
+          </div>
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="err mt-12">{{ form.non_field_errors|striptags }}</div>
+        {% endif %}
+
+        <div class="form-actions mt-16">
+          <button class="btn" type="submit" data-loading-btn>Submit enquiry</button>
+          <a class="btn btn-ghost" href="{% url 'home' %}">Back</a>
+          <div class="muted small">We never share your details.</div>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}
+

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ driver.full_name }} | SK Tours & Travels{% endblock %}
+
+{% block content %}
+  <section class="detail-head reveal">
+    <div>
+      <div class="pill">Driver</div>
+      <h1 class="mt-8">{{ driver.full_name }}</h1>
+      <div class="muted mt-6">{{ driver.experience_years }} yrs experience • {{ driver.city|default:"—" }}</div>
+    </div>
+    <div class="detail-actions">
+      <a class="btn" href="{% url 'book' %}?driver={{ driver.pk }}">Book with this driver</a>
+      <a class="btn btn-ghost" href="{% url 'drivers_list' %}">Back to drivers</a>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="two-col">
+      <div class="detail-media">
+        {% if driver.photo %}
+          <img src="{{ driver.photo.url }}" alt="{{ driver.full_name }}" />
+        {% else %}
+          <img src="{% static 'img/driver-placeholder.svg' %}" alt="Driver placeholder" />
+        {% endif %}
+      </div>
+      <div class="card pad">
+        <h2>Profile</h2>
+        <div class="kv mt-12">
+          <div class="kv-row">
+            <div class="muted">Languages</div>
+            <div>{{ driver.languages|default:"—" }}</div>
+          </div>
+          <div class="kv-row">
+            <div class="muted">License</div>
+            <div>{{ driver.license_number }}</div>
+          </div>
+          <div class="kv-row">
+            <div class="muted">Availability</div>
+            <div>{% if driver.is_available %}Available{% else %}Busy{% endif %}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2>Assigned car</h2>
+        {% if driver.assigned_car %}
+          <div class="muted mt-12">{{ driver.assigned_car.name }} • {{ driver.assigned_car.seats }} seats • {{ driver.assigned_car.get_category_display }}</div>
+          <div class="mt-16">
+            <a class="btn btn-sm" href="{% url 'car_detail' driver.assigned_car.pk %}">View car</a>
+            <a class="btn btn-sm btn-ghost" href="{% url 'book' %}?car={{ driver.assigned_car.pk }}&driver={{ driver.pk }}">Enquire</a>
+          </div>
+        {% else %}
+          <div class="muted mt-12">No assigned car.</div>
+          <div class="mt-16">
+            <a class="btn btn-sm" href="{% url 'book' %}?driver={{ driver.pk }}">Enquire</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
+

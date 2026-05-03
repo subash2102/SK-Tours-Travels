@@ -1,0 +1,19 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Delete | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="card pad mt-16">
+    <h1>Confirm delete</h1>
+    <p class="muted mt-8">This action cannot be undone.</p>
+    <div class="mt-12">
+      <div class="pill">You are deleting: <strong>{{ object }}</strong></div>
+    </div>
+    <form method="post" class="mt-16">
+      {% csrf_token %}
+      <button class="btn btn-danger" type="submit" data-loading-btn>Delete</button>
+      <a class="btn btn-ghost" href="{{ cancel_url }}">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
+

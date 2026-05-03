@@ -1,0 +1,52 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Cars (Admin) | SK Tours & Travels{% endblock %}
+
+{% block dash_content %}
+  <div class="dash-head">
+    <div>
+      <h1>Cars</h1>
+      <div class="muted">Create, update, or remove car details.</div>
+    </div>
+    <a class="btn btn-sm" href="{% url 'dashboard_car_create' %}">+ New car</a>
+  </div>
+
+  <form method="get" class="filter-bar mt-16">
+    <input name="q" value="{{ q }}" placeholder="Search by name / brand..." />
+    <button class="btn btn-sm" type="submit">Search</button>
+    <a class="btn btn-sm btn-ghost" href="{% url 'dashboard_cars' %}">Reset</a>
+  </form>
+
+  <div class="table mt-16">
+    <div class="t-head">
+      <div>Name</div>
+      <div>Category</div>
+      <div>Seats</div>
+      <div>Status</div>
+      <div></div>
+    </div>
+    {% for car in cars %}
+      <div class="t-row">
+        <div>
+          <div class="t-strong">{{ car.name }}</div>
+          <div class="muted small">{{ car.brand|default:"—" }}</div>
+        </div>
+        <div>{{ car.get_category_display }}</div>
+        <div>{{ car.seats }}</div>
+        <div>
+          <span class="badge {% if car.is_available %}badge-ok{% else %}badge-no{% endif %}">
+            {% if car.is_available %}Available{% else %}Busy{% endif %}
+          </span>
+        </div>
+        <div class="t-actions">
+          <a class="btn btn-xs btn-ghost" href="{% url 'car_detail' car.pk %}">View</a>
+          <a class="btn btn-xs" href="{% url 'dashboard_car_edit' car.pk %}">Edit</a>
+          <a class="btn btn-xs btn-danger" href="{% url 'dashboard_car_delete' car.pk %}">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="muted mt-12">No cars yet.</div>
+    {% endfor %}
+  </div>
+{% endblock %}
+
