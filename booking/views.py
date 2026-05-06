@@ -18,7 +18,7 @@ def home(request):
     review_form = ReviewForm()
     return render(
         request,
-        "public/home.html",
+        "dashboard/home.html",
         {"featured_cars": cars, "featured_drivers": drivers, "reviews": reviews, "review_form": review_form},
     )
 
