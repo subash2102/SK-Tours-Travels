@@ -119,14 +119,14 @@ USE_TZ = True
 # if os.getenv("DJANGO_DEBUG", "1") != "1":
 #     STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 if os.getenv("DJANGO_DEBUG", "1") != "1":
-   STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    STORAGES = {
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
         },
     }
 MEDIA_URL = "media/"
