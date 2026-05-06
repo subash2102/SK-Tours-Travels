@@ -124,12 +124,11 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 if os.getenv("DJANGO_DEBUG", "1") != "1":
-    STORAGES = {
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+   STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
         },
     }
-
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
