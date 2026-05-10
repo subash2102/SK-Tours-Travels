@@ -25,7 +25,7 @@ ALLOWED_HOSTS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
-    for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "http://127.0.0.1,http://localhost").split(",")
+    for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "http://127.0.0.1,http://localhost,https://web-production-0a513.up.railway.app").split(",")
     if o.strip()
 ]
 
