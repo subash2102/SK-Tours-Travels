@@ -37,6 +37,6 @@ def send_booking_status_email(booking) -> tuple[bool, str]:
         message=body,
         from_email=from_email,
         recipient_list=[recipient_email],
-        fail_silently=False,
+        fail_silently=True,
     )
     return (sent_count > 0, "Email sent." if sent_count > 0 else "Email not sent.")
