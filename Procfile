@@ -1,1 +1,1 @@
-web: gunicorn sktt.wsgi
+web: python manage.py migrate && gunicorn sktt.wsgi
