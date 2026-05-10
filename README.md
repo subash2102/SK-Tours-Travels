@@ -97,3 +97,6 @@ After logging in as staff:
 - Image uploads (car/driver photos) are saved to `media/` in development.
 - The site is “static-style”: fast, template-rendered pages with CSS/JS animations (no SPA).
 
+## Revert to First Commit
+git reset --hard 8944cfd37aaa50a04a051c6ea2ce31c961241b46
+
