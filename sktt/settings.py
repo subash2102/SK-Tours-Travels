@@ -76,30 +76,38 @@ TEMPLATES = [
 WSGI_APPLICATION = "sktt.wsgi.application"
 
 
-database_url = os.getenv("DATABASE_URL", "").strip()
-if database_url and dj_database_url:
-    try:
-        DATABASES = {
-            "default": dj_database_url.parse(
-                database_url,
-                conn_max_age=600,
-                ssl_require=True,
-            )
-        }
-    except Exception:
-        DATABASES = {
-            "default": {
-                "ENGINE": "django.db.backends.sqlite3",
-                "NAME": BASE_DIR / "db.sqlite3",
-            }
-        }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+# database_url = os.getenv("DATABASE_URL", "").strip()
+# if database_url and dj_database_url:
+#     try:
+#         DATABASES = {
+#             "default": dj_database_url.parse(
+#                 database_url,
+#                 conn_max_age=600,
+#                 ssl_require=True,
+#             )
+#         }
+#     except Exception:
+#         DATABASES = {
+#             "default": {
+#                 "ENGINE": "django.db.backends.sqlite3",
+#                 "NAME": BASE_DIR / "db.sqlite3",
+#             }
+#         }
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
+
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True,
+    )
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
