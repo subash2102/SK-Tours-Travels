@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 if os.getenv("DJANGO_DEBUG", "1") != "1":
     MIDDLEWARE.append("whitenoise.middleware.WhiteNoiseMiddleware")
@@ -113,11 +114,10 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-if os.getenv("DJANGO_DEBUG", "1") != "1":
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
