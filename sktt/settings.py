@@ -20,12 +20,12 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-only-change-me")
 DEBUG = os.getenv("DJANGO_DEBUG", "1") == "1"
 ALLOWED_HOSTS = [
     h.strip()
-    for h in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,.vercel.app,web-production-0a513.up.railway.app").split(",")
+    for h in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost,.vercel.app,web-production-0a513.up.railway.app,web-production-ed52ed.up.railway.app").split(",")
     if h.strip()
 ]
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
-    for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "http://127.0.0.1,http://localhost,https://web-production-0a513.up.railway.app").split(",")
+    for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "http://127.0.0.1,http://localhost,https://web-production-0a513.up.railway.app,web-production-ed52ed.up.railway.app").split(",")
     if o.strip()
 ]
 
