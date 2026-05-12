@@ -267,7 +267,15 @@ def dashboard_booking_detail(request, pk: int):
         messages.error(request, "Please correct the errors below.")
     else:
         form = BookingStatusForm(instance=booking)
-    return render(request, "dashboard/booking_detail.html", {"booking": booking, "form": form})
+    
+    from booking.whatsapp import build_booking_whatsapp_url
+    whatsapp_message_url = build_booking_whatsapp_url(booking)
+    
+    return render(request, "dashboard/booking_detail.html", {
+        "booking": booking,
+        "form": form,
+        "whatsapp_message_url": whatsapp_message_url,
+    })
 
 
 @staff_required

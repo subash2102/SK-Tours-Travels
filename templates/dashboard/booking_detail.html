@@ -43,19 +43,23 @@
           {% if form.status.errors %}<div class="err">{{ form.status.errors|striptags }}</div>{% endif %}
         </div>
         <div class="form-actions mt-16">
-          <button class="btn" type="submit" data-loading-btn>
-            Save
-          </button>
-
-          <a
-            href="https://wa.me/91{{ booking.phone }}?text=Hello%20{{ booking.full_name }}%0A%0AYour%20booking%20status%20is:%20{{ booking.get_status_display }}%0A%0APickup:%20{{ booking.pickup_location }}%0ADrop:%20{{ booking.drop_location }}%0ADate:%20{{ booking.pickup_datetime|date:'d M Y H:i' }}%0A%0A-SK%20Tours%20%26%20Travels"
-            target="_blank"
+          <button
             class="btn"
-            style="margin-left:10px;"
+            type="submit"
+            data-loading-btn
+            id="sendWhatsappBtn"
           >
-            Send WhatsApp
-          </a>
+            Save & Send WhatsApp
+          </button>
         </div>
+        <script>
+          document.getElementById('sendWhatsappBtn').addEventListener('click', function() {
+            setTimeout(function() {
+              const whatsappUrl = "{{ whatsapp_message_url|safe }}";
+              window.open(whatsappUrl, "_blank");
+            }, 500);
+          });
+        </script>
       </form>
 
       <h2 class="mt-20">Preferences</h2>
