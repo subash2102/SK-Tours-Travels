@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -9,7 +9,7 @@ from .decorators import staff_required
 from .forms import BookingForm, BookingStatusForm, CarForm, DriverForm, ReviewForm
 from .models import Booking, Car, Driver, Review
 from .notifications import send_booking_status_email
-
+from .utils import build_booking_whatsapp_url
 
 def home(request):
     cars = Car.objects.filter(is_available=True)[:6]
@@ -248,34 +248,35 @@ def dashboard_bookings(request):
 
 
 @staff_required
-def dashboard_booking_detail(request, pk: int):
+def dashboard_booking_detail(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
+
     if request.method == "POST":
-        previous_status = booking.status
         form = BookingStatusForm(request.POST, instance=booking)
+
         if form.is_valid():
-            updated_booking = form.save()
-            if previous_status != updated_booking.status:
-                sent, details = send_booking_status_email(updated_booking)
-                if sent:
-                    messages.success(request, "Booking updated and status email sent.")
-                else:
-                    messages.warning(request, f"Booking updated, but status email was not sent: {details}")
-            else:
-                messages.success(request, "Booking updated.")
+            booking = form.save()
+
+            messages.success(request, "Booking updated.")
+
+            # Open WhatsApp with updated status
+            if request.POST.get("send_whatsapp") == "1":
+                whatsapp_url = build_booking_whatsapp_url(booking)
+
+                if whatsapp_url:
+                    return HttpResponseRedirect(whatsapp_url)
+
             return redirect("dashboard_booking_detail", pk=booking.pk)
-        messages.error(request, "Please correct the errors below.")
+
     else:
         form = BookingStatusForm(instance=booking)
-    
-    from booking.whatsapp import build_booking_whatsapp_url
-    whatsapp_message_url = build_booking_whatsapp_url(booking)
-    
-    return render(request, "dashboard/booking_detail.html", {
+
+    context = {
         "booking": booking,
         "form": form,
-        "whatsapp_message_url": whatsapp_message_url,
-    })
+    }
+
+    return render(request, "dashboard/booking_detail.html", context)
 
 
 @staff_required
