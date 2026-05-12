@@ -45,8 +45,7 @@
         <div class="form-actions mt-16">
           <button
             class="btn"
-            type="submit"
-            data-loading-btn
+            type="button"
             id="sendWhatsappBtn"
           >
             Save & Send WhatsApp
@@ -58,13 +57,15 @@
             .getElementById("sendWhatsappBtn")
             .addEventListener("click", function () {
 
+              // open whatsapp first
               const whatsappUrl = "{{ whatsapp_message_url|escapejs }}";
 
-              setTimeout(function () {
-                if (whatsappUrl) {
-                  window.open(whatsappUrl, "_blank");
-                }
-              }, 500);
+              if (whatsappUrl) {
+                window.open(whatsappUrl, "_blank");
+              }
+
+              // then submit form
+              this.closest("form").submit();
 
             });
         </script>
