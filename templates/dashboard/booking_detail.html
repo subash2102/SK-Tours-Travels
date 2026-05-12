@@ -52,13 +52,21 @@
             Save & Send WhatsApp
           </button>
         </div>
+
         <script>
-          document.getElementById('sendWhatsappBtn').addEventListener('click', function() {
-            setTimeout(function() {
-              const whatsappUrl = "{{ whatsapp_message_url|safe }}";
-              window.open(whatsappUrl, "_blank");
-            }, 500);
-          });
+          document
+            .getElementById("sendWhatsappBtn")
+            .addEventListener("click", function () {
+
+              const whatsappUrl = "{{ whatsapp_message_url|escapejs }}";
+
+              setTimeout(function () {
+                if (whatsappUrl) {
+                  window.open(whatsappUrl, "_blank");
+                }
+              }, 500);
+
+            });
         </script>
       </form>
 
